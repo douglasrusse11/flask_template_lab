@@ -23,6 +23,15 @@ def create_event():
     guests_num = request.form["Number of Guests"]
     room_location = request.form["Room Location"]
     description = request.form["Description"]
-    new_event = Events(event_date, name, guests_num, room_location, description)
+    if "Recurring" in request.form:
+        recurring = True
+    else:
+        recurring = False
+    new_event = Events(event_date, name, guests_num, room_location, description, recurring)
     list_1.append(new_event)
+    return redirect('/')
+
+@our_app.route('/events/delete/<index>', methods=['POST'])
+def delete_event(index):
+    list_1.pop(int(index))
     return redirect('/')

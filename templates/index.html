@@ -4,13 +4,23 @@
 
     {% for event in my_events %}
     <div>
-        <h2>{{ event.event_name }}</h2>
+ 
+        <h2>
+        {% if event.recurring %}
+        <!-- <span><img src="https://www.fileformat.info/info/unicode/char/1f5d8/clockwise_right_and_left_semicircle_arrows.png" alt=""></span> -->
+        <span>&#8635;</span>
+        {{ event.event_name }}
+        {% endif %}
+    </h2>
         <ul>
         <li>{{ event.date }}</li>
         <li>{{ event.guests_num }}</li>
         <li>{{ event.room_location }}</li>
         <li>{{ event.description }}</li>
             </ul>
+            <form action="/events/delete/{{ my_events.index(event) }}" method="post">
+                <input type="submit" value="Delete">
+            </form>
             </div>
             <hr>
     {% endfor %}
@@ -31,6 +41,9 @@
 <label for="description">Description</label>
     <input type="text" name = "Description">
     <br>
+<label for="recurring">Recurring?</label>
+<input type="checkbox" name="Recurring">
+<br>
     <input type="submit" value="Create Event">
 
 
